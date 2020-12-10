@@ -1,22 +1,32 @@
-savePath='X:\Analyses\PaperPosterFigures\';
-loadERPs; % takes 35 seconds
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+rootDir = '/Volumes/users/Seydanur Tikir/';
+mat = '/Users/Albert/Desktop/mat/'; addpath(genpath(mat)); 
+load('timePts_122');EEGtimes=t;
+addpath(genpath('/Users/Albert/Desktop/eeglab/')); 
 
-clear all
+cd([mat,'plot']); 
+savePath=[rootDir,filesep,'Analyses',filesep,'PaperPosterFigures'];
+%loadERPs; % takes 35 seconds
+%clear all
+
 splt_turq4shades = [1 66 66; 32 107 107; 103 167 167 ; 167 204 204]/255;
 cases={'item1','item2','target','invalidThird','correct','catch','easyFiller','ctrlFiller'};
 grps = {'Neurotypical','Autism'};rejType='RejectedNoise50BrainSafety5';load('timePts_122');lenT=122; nbchan=160;
-subIDs={}; subGrps={}; for i = 1:length(grps); IDs = dir(['X:\Analyses\4DmatFiles\',rejType,filesep,'noBaseline\',grps{i},'\1*']); for j = 1:size(IDs,1)
+subIDs={}; subGrps={}; for i = 1:length(grps); IDs = dir([rootDir,'Analyses',filesep,'4DmatFiles',filesep,rejType,filesep,'noBaseline',filesep,grps{i},filesep,'1*']); for j = 1:size(IDs,1)
 ID=IDs(j).name; subIDs = [subIDs; ID]; subGrps = [subGrps; grps{i}]; end; end %.. and ..\.. is same. be safe
 b=3;baselineNames={'baseline50','baseline100','noBaseline'};baselineName=baselineNames{b};
-loadPath =['X:\Analyses\4DmatFiles\',rejType,'\',baselineName,filesep];
+loadPath =[rootDir,'Analyses',filesep,'4DmatFiles',filesep,rejType,filesep,baselineName,filesep];
+
 allERPs= zeros(4,length(t),length(cases),160,length(subIDs));
 for k=1:length(subIDs)
-load([loadPath,subGrps{k},filesep,subIDs{k},'/avgERPs.mat']);
+load([loadPath,subGrps{k},filesep,subIDs{k},filesep,'avgERPs.mat']);
 allERPs(:,:,:,:,k) = avgERPs;
 end % allERPs(1,2,1,8,44)
 outlierSubInds=[35 2 9] % 38 wa rejected earlier. to reproduce. 45
 subIDs(outlierSubInds)=[]; subGrps(outlierSubInds)=[]; allERPs(:,:,:,:,outlierSubInds)=[];
-% find indNT and indASD
+
+
+%% find indNT and indASD
 for k=1:length(subGrps); if strcmp(subGrps{k},'Autism'); ind=k; break; end; end
 indASD = [ind:length(subGrps)]; indNT = [1:ind-1]; indAll=[1:length(subGrps)];
 grpInds={indNT,indASD,indAll}; grpIndNames= {'NT','ASD','All'};
@@ -67,7 +77,7 @@ Pvolt = zeros(4,7,2); Plat = zeros(4,7,2);
 for cs=1:7;for i=1:2;k=grpInds{i};for co=1:4
     g=squeeze(allERPs(co,:,cs,:,k)); gfp=[];for kk=1:length(k); gfp=[gfp; std(g(:,:,kk)')]; end; gfp=mean(gfp,1);
     peakProCutOff=150; 
-    gfpP1= gfp(ms2time(intervals{in}));
+    gfpP1= gfp(ms2time(intervals{in},EEGtimes));
     [peakValues,peakInd,peakWidths,peakProminences]=findpeaks(gfpP1); 
     peaks = [peakValues; peakInd;peakWidths;peakProminences];
     peakProCutOff = max(peakProminences)/2;
@@ -79,7 +89,7 @@ P1V=Pvolt; P1lat=Plat;
 %% Second Positive Peak / SPC - calculate the peak voltage and latency 
 % 70 133 195 
 Pvolt = zeros(4,8,2); Plat = zeros(4,8,2);
-t=ms2time(200:320);
+t=ms2time(200:320,EEGtimes);
 for cs=1:8;for i=1:2; k=grpInds{i};for co=1:4
     gfp=grpGFPs(co,t,cs,i);
     [peakValues,peakInd,peakWidths,peakProminences]=findpeaks(gfp); 
@@ -135,7 +145,8 @@ print('-dtiff','-r500',[savePath,filesep,PlotName,'.jpeg']); close;
 
 
 %% Scalp Maps Comparing Conditions and Groups for a time interval
-%eeglab; load('chanlocs.mat'); 
+%eeglab; 
+load('chanlocs160.mat'); 
 intervals={[70:195] [250:500] [500:600] [600:700] [700:850] [850:949]};
 cs=3;maplim=[-5 5]; in=2;
 %cs=2;maplim=[-2 2]; in=6;
@@ -146,7 +157,7 @@ maplim=[-4 2]; in=3;
 cs=3;
 nrow=2; ncol=4; fullfig('Border',[15 27]); hold on; 
 for co=1:4; col=co; for i=1:2; row=i; subplot(nrow,ncol,(row-1)*ncol+col ); try
-    data=squeeze(allERPs(co,ms2time(intervals{in}),cs,:,grpInds{i})); data=mean(data,1); data=mean(data,3);
+    data=squeeze(allERPs(co,ms2time(intervals{in},EEGtimes),cs,:,grpInds{i})); data=mean(data,1); data=mean(data,3);
 % topoplot(data,chanlocs);cbar('vert') 
  topoplot(data,chanlocs,'maplimits', maplim); cbar('vert',0,maplim); 
 end; end; end; 
@@ -170,8 +181,8 @@ cs=6;maplim=[-4 4]; in=6;
 %cs=1;maplim=[-2 2]; in=1;
 nrow=2; ncol=5; fullfig('Border',[15 27]); hold on; 
 for in=1:5; col=in; for i=1:2; row=i; subplot(nrow,ncol,(row-1)*ncol+col ); try
-    data=squeeze(allERPs(co,ms2time(intervals{in}),cs,:,grpInds{i})); data=mean(data,1); data=mean(data,3);
-  topoplot(data,chanlocs);cbar('vert') 
+    data=squeeze(allERPs(co,ms2time(intervals{in},EEGtimes),cs,:,grpInds{i})); data=mean(data,1); data=mean(data,3);
+    topoplot(data,chanlocs);cbar('vert') 
  %topoplot(data,chanlocs,'maplimits', maplim); cbar('vert',0,maplim); 
 end; end; end; 
 %Add labels on scalp maps
@@ -197,8 +208,8 @@ CdifVec=[1 2; 2 3; 3 4; 1 3; 2 4; 1 4]; CdifLabels={'C1-C2', 'C2-C3','C3-C4','C1
 cs=2;maplim=[-2 2]; in=6;
 nrow=2; ncol=6; fullfig('Border',[15 27]); hold on; 
 for cd=1:6; col=cd; for i=1:2; row=i; subplot(nrow,ncol,(row-1)*ncol+col ); try
-    data1=squeeze(allERPs(CdifVec(cd,2),ms2time(intervals{in}),cs,:,grpInds{i})); data1=mean(data1,1); data1=mean(data1,3);
-    data2=squeeze(allERPs(CdifVec(cd,1),ms2time(intervals{in}),cs,:,grpInds{i})); data2=mean(data2,1); data2=mean(data2,3);
+    data1=squeeze(allERPs(CdifVec(cd,2),ms2time(intervals{in},EEGtimes),cs,:,grpInds{i})); data1=mean(data1,1); data1=mean(data1,3);
+    data2=squeeze(allERPs(CdifVec(cd,1),ms2time(intervals{in},EEGtimes),cs,:,grpInds{i})); data2=mean(data2,1); data2=mean(data2,3);
     data=data1-data2;
 %topoplot(data,chanlocs);cbar('vert') 
  topoplot(data,chanlocs,'maplimits', maplim); %cbar('vert',0,maplim); 
@@ -213,14 +224,15 @@ figure; cbar('horiz',0,maplim); print('-dtiff','-r500',[savePath,filesep,'colorb
 
 
 %% Scalp Maps for CASE differences  (item3-item2)
-%eeglab; load('chanlocs.mat'); 
+%eeglab; 
+load('chanlocs160.mat'); 
 intervals={[70:195] [250:500] [500:600] [600:700] [750:949] [700:850] [850:949] [1:949]};
 maplim=[-5 2];
 cs1= 6;  cs2= 3; in=2; 
 nrow=2; ncol=4; fullfig('Border',[15 27]); hold on; 
 for co=1:4; col=co; for i=1:2; row=i; subplot(nrow,ncol,(row-1)*ncol+col ); try
-    data1=squeeze(allERPs(co,ms2time(intervals{in}),cs1,:,grpInds{i})); 
-    data2=squeeze(allERPs(co,ms2time(intervals{in}),cs2,:,grpInds{i})); 
+    data1=squeeze(allERPs(co,ms2time(intervals{in},EEGtimes),cs1,:,grpInds{i})); 
+    data2=squeeze(allERPs(co,ms2time(intervals{in},EEGtimes),cs2,:,grpInds{i})); 
     data4map=mean(mean(data1,1),3)-mean(mean(data2,1),3);
     data4erp=mean(data1(:,ch,:),3)-mean(data2(:,ch,:),3);
 topoplot(data4map,chanlocs);cbar('vert') 
@@ -246,7 +258,7 @@ figure; cbar('horiz',0,maplim); print('-dtiff','-r500',[savePath,filesep,'colorb
 PlotName = 'Scalp Maps at P1 peak';
 maplim=[-2 2]; numcs=3; fullfig('Border',[15 18]); hold on; 
 for i=1:2; for cs=1:numcs; for co=1:4; subplot(numcs,9,(cs-1)*9+(i-1)*5+co);
-peakTime=ms2time(P1lat(co,cs,i)); interval = [peakTime-3 : peakTime+3];
+peakTime=ms2time(P1lat(co,cs,i),EEGtimes); interval = [peakTime-3 : peakTime+3];
 try; data=squeeze(allERPs(co,interval,cs,:,grpInds{i})); data=mean(data,1); data=mean(data,3);
  topoplot(data,chanlocs,'maplimits', maplim); %cbar('vert',0,maplim); 
 end; end; end; end
@@ -278,7 +290,7 @@ end; title([cases{cs},'-',grpIndNames{i}]); end;
 % pre-calculate 'area' under curve for 1.all 2.P1 3.P3 4.P5 5.P7 6.P9 
 intervals={[70:195] [250:500] [500:600] [600:700] [700:850] [850:949]};
 area=zeros(4,8,2,length(intervals)); for cs=1:8; for i=1:2; for co=1:4; for in=1:length(intervals)
-gfp= grpGFPs(co,ms2time(intervals{in}),cs,i);
+gfp= grpGFPs(co,ms2time(intervals{in},EEGtimes),cs,i);
 area(co,cs,i,in) = sum(gfp); end; end; end; end
 
 % pre-calculate condition index 'ci' 

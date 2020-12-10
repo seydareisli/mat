@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 clear all
 
 cd('S:\Pool'); addpath(pwd); 

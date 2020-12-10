@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 filter075 =1;
 filter001 =5;
 

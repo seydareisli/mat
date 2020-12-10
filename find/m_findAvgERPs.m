@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %calculate avg ERPs for subject  4D:(cond,time,case,chan)
 
 %chan time trial --> cond time case chan 

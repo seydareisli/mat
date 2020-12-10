@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function myStr = findNtypeTimeRanges(x)
     lenRanges=diff([0 find([diff(x) inf]>1)]); 
     endPts=cumsum(lenRanges); startPts=endPts-lenRanges+1;

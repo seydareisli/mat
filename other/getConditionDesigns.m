@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 clear; clc; paths; 
 eeglab;
 load_path=['X:\Analyses',filesep,'EEGevents'];

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 
 %running dependent samples t-tests were performed between summed and multisensory conditions (for aligned and misaligned conditions) 
 %across all channels and time points

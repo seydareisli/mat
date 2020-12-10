@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 grps = {'Neurotypical','Autism'};
 cases={'item1','item2','target','invalidThird','correct','catch','easyFiller','ctrlFiller'};
 

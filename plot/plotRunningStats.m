@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 addpath('S:\pool\');%addpath('S:\eeglab');eeglab;close
 figPath='X:\Analyses\PaperPosterFigures\';
 % Note there are 2 Versions of the code findConsecutiveSignificances2 and findConsecutiveSignificances

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function [P T] = clusterPlot(p_val,t_val,alpha,numconsec,time,labels,epochLen,numChans,figname)
 
 T= zeros(size(p_val));

@@ -1,4 +1,5 @@
-% Like Mick did 
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 % ERPs is a 3D matrix (chan X times X trials)
 %    saves for single epochs
 %    trials may contain all sorts of trials (dfr stimuli or conditions)

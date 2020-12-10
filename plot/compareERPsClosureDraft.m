@@ -1,3 +1,4 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
 
 nbchan=128;
 length(t)

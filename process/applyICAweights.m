@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
  %j=5 11106 error
 clc 
 clear all

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %check if there is any outlier channels 
 %writes rejection stats as well. 
 %reject outlier trials based on max GFPs

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function [EEGevents,inds]=m_findEvents(EEG,stimuliTrigMat)
 EEGevents=[]; inds=[];
 for e=1:length(EEG.event); 

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %cases={'item1',item2',target',invalidThird',correct',catch',filler'};
 
 function [class,classNum] = findTrig(trig)

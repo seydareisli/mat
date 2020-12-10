@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %saveNameRoot is something like 10545_WithResponse
 % If you want to save the first subset only, enter 1 for isFirstSubsetOnly
 

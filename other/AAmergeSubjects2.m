@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 % Merge all subjects. (loadingFrom & savingTo "epochedSet" folder) 
 % bu kodun sonunda dusundugum diger dataset avg metodlari var
 

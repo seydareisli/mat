@@ -1,20 +1,22 @@
-cd('S:\Pool'); addpath(pwd); 
+rootDir = '/Volumes/users/Seydanur Tikir/';
+mat = '/Users/Albert/Desktop/mat/'; addpath(genpath(mat)); 
+cd([mat,'plot']); 
 grps = {'Neurotypical','Autism'};
 splt_turq4shades = [1 66 66; 32 107 107; 103 167 167 ; 167 204 204]/255;
 cases={'item1','item2','target','invalidThird','correct','catch','easyFiller','ctrlFiller'};
 rejTypes = {'SelectedBrain50','SelectedBrain20','RejectedNoise80','RejectedNoise50BrainSafety5'};
 r=4;rejType = rejTypes{r};
-load('timePts_122');
+load('timePts_122');EEGtimes=t;
 lenT=122; nbchan=160;
 
-subIDs={}; subGrps={}; for i = 1:length(grps); IDs = dir(['X:\Analyses\4DmatFiles\',rejType,filesep,'noBaseline\',grps{i},'\1*']); for j = 1:size(IDs,1)
+subIDs={}; subGrps={}; for i = 1:length(grps); IDs = dir([rootDir,'Analyses',filesep,'4DmatFiles',filesep,rejType,filesep,'noBaseline',filesep,grps{i},filesep,'1*']); for j = 1:size(IDs,1)
 ID=IDs(j).name; subIDs = [subIDs; ID]; subGrps = [subGrps; grps{i}]; end; end %.. and ..\.. is same. be safe
 b=3;baselineNames={'baseline50','baseline100','noBaseline'};baselineName=baselineNames{b};
-loadPath =['X:\Analyses\4DmatFiles\',rejType,'\',baselineName,filesep];
+loadPath =[rootDir,filesep,'Analyses',filesep,'4DmatFiles',filesep,rejType,filesep,baselineName,filesep];
 %% Load avgERPs and create a 5D allERPs matrix, the last dimension storing subjects 
 allERPs= zeros(4,length(t),length(cases),160,length(subIDs));
 for k=1:length(subIDs)
-load([loadPath,subGrps{k},filesep,subIDs{k},'/avgERPs.mat']);
+load([loadPath,subGrps{k},filesep,subIDs{k},filesep,'avgERPs.mat']);
 allERPs(:,:,:,:,k) = avgERPs;
 end % allERPs(1,2,1,8,44)
 %% exclude subjects (it does a great job!!) 

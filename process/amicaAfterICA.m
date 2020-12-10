@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 clear all
 load_path='X:\Analyses\ICAafterChannelSpectraCleaning\';
 path_get_ready='X:\Analyses\beforeAMICA-chanSubsetSelected\';

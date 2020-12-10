@@ -1,4 +1,4 @@
-% Author: Seydanur Tikir (stikir@mail.einstein.yu.edu)
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
 % January 30 2019
 
 function writeDataQuality(save_path,currentFile,EEG,note)

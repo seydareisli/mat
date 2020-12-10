@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function [reorder] = createChanGroups(chanlocs, numGroups)
 
     channels={chanlocs.labels}; X=[chanlocs.X]; Y=[chanlocs.Y]; Z=[chanlocs.Z]; 

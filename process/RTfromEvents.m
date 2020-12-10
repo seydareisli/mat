@@ -1,4 +1,6 @@
-% SPLT
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
+
 trigC1 =[13 16]; trigC2=[23 26]; trigC3=[33 36]; trigC4=[43 46]; 
 cnd=[1; 2; 3; 4];
 triggers = {trigC1,trigC2,trigC3,trigC4};

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
    function [evBlocks evConds]= m_findEvBlocks(EEG,stimuliTrigMat,  boundaryCodes)
     events = []; for e = 1:length(EEG.event); events = [events str2num(EEG.event(e).type)]; end 
     events = events(find(ismember(events,[stimuliTrigMat boundaryCodes]))); %6636 (temporarily bigger size)

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 drive='\\data.einsteinmed.org\Users\CNL Lab\Data_new\SPLT\';
 %drive='/Volumes/users/Data_new/SPLT/'
 loadPath=[drive,'\Analyses\ICAweightsApplied\']; 

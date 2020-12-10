@@ -1,4 +1,5 @@
-%Seydanur Tikir
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %searches for the closest chans to your chan within 160 cap
 % its ok to use 64 chan as an input and it will find the closest ones
 % within 160 cap. 

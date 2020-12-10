@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 %findChanNum(ch)
 
 function ch = findChanNum(chan)

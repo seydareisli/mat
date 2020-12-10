@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 % Edited on
 clear; clc;
 matlabSession = input('Is this Matlab Session 1 or Sessiaon 2? (choose 0 for all subjects)\n ')%%feature('getpid')

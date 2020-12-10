@@ -1,3 +1,4 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
   
   function [ERPs,preStim,events,evConds,evBlocks] = m_rejectIncorrects(trigCodes2remove,ERPs,preStim,events,evConds,evBlocks)
 

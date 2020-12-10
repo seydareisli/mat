@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function plotAmicaProbability(EEG,modelOut,winLen,walkLen,figName)
 pnts = size(modelOut.v,2);
 numMod = modelOut.num_models;

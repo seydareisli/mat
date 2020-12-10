@@ -1,4 +1,4 @@
-%Seydanur TIkir
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
 % July 10  2020
 
 %draws scalp comparision maps as Sophie likes

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function [clockPosName] = getClockPosName(chanLabel)
 
 if strcmp('AN1', chanLabel); clockPos = 0; centralness=0; centralnessName = 'Cz'; else

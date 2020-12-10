@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 function text = writeStatResults(testType, table, factorNames)
 
 %convert all values in the table/result to a character array? 

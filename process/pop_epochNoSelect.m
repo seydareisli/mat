@@ -1,5 +1,5 @@
-
-% Seyda removed line saying pop_select for 3DsaveMat function 
+% This is an EEGlab function that was edited by Seydanur Tikir
+% The line saying pop_select was removed for 3DsaveMat function 
 
 % pop_epoch() - Convert a continuous EEG dataset to epoched data by extracting
 %               data epochs time locked to specified event types or event indices. 

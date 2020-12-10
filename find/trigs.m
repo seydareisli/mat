@@ -1,3 +1,4 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
 
 % Function for finding trigger codes for a particular type of trial
 % Input: trial type. 

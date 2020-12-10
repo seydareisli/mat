@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 % filtered at 0.01 Hz 
 %i=2, j=11 probem. skipped. it/s 64 chans!
 clear all

@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 clear all
 
 grps = {'Neurotypical','Autism'};

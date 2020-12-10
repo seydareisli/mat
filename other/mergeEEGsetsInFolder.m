@@ -1,3 +1,4 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
 
 function EEGmerged = mergeEEGsetsInFolder(load_folder_path)
     temp_set=[]; 

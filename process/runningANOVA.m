@@ -1,3 +1,5 @@
+% Author: Seydanur Tikir (seydanurtikir@gmail.com)
+
 % Running ANOVA
 % Author: Seydanur Tikir  Contact: seydanurtikir@gmail.com
 % This is an early version of the code, last updated on 07/02/2020)
