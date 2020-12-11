@@ -1,0 +1,85 @@
+% Removes EEG data within the regions of rest breaks
+%   1. removes initial break where the participant is reading instructions 
+%   2. removes all breaks between any two trials
+%  - uses eegrej function to reject these regions
+%  - generates useful messages on command window to record how many regions
+%      are rejected, and the time points for the boundaries of these regions. 
+% In SPLT study, the trigger codes that are ending blocks are 101,102,103,104,
+% the trigger code for clikcs that are used for going to next instruction or block is 99.
+
+% IMPORTANT NOTE: USE EEGLAB 14 OR LATER VERSIONS! - See eeglab bug 1971 for more info
+
+% -------------------------------------------------------------------------
+% Author: Seydanur Tikir stikir@mail.einstein.yu.edu
+% Jan 5th, 2019
+% -------------------------------------------------------------------------
+
+
+clear; 
+paths; load_path = path1;  save_path= path2;
+eeglab; clc;
+
+for i = 1:numel(group)
+    mkdir(save_path,group{i}) 
+    id = dir([load_path,group{i}]); id(1:num_OS) = []; %1:2 for windows, 1:3 for mac
+    
+     tt=1; firstevents=[];
+    
+    for j = 1:size(id,1) 
+        mkdir([save_path,group{i},filesep,id(j).name]);
+        fprintf('___Subject: %s\n',id(j).name);        
+        subject_load_path = [load_path,group{i}, filesep, id(j).name, filesep];
+        subject_save_path = [save_path,group{i}, filesep, id(j).name, filesep];
+        files = dir([subject_load_path, filesep, '*.set']);
+        
+        for k=1:length(files) 
+            
+            EEG=pop_loadset(files(k).name,subject_load_path);
+
+            %create matrix x to strore time between two trials. 
+            fprintf('___Name of the current EEG file is: %s\n',files(k).name);
+            fprintf('___Length of the current EEG file is: %d\n',length(EEG.data));
+            
+            x=[]; y=[]; m=0;
+            for n=1:length(EEG.event)
+                try
+                    if EEG.event(n).type == 101 || EEG.event(n).type == 102 || EEG.event(n).type == 103 || EEG.event(n).type == 104
+                        m=m+1;
+                        x(m,1)=EEG.event(n).latency;
+                        x(m,2)=EEG.event(n+1).latency; %event(n+1) is 99, which is next session
+                        y(m) = x(m,2)-x(m,1);    
+                    end
+
+                end
+            end
+            
+            x(m,2)=length(EEG.data);
+            fprintf('___Rejecting data point intervals in the following matrix x:\n');
+            x %this will print the matrix x on command window. do not delete.
+            EEG = eeg_eegrej( EEG, x);
+            fprintf('___Number of rejected break intervals: %d\n',m);
+           
+            
+            for first =1:50
+                if EEG.event(first).type == '99'
+                    continue 
+                else
+                    
+                    EEG = eeg_eegrej( EEG, [0 EEG.event(first).latency]);
+                    fprintf('___Initial interval is removed until data point %d including %d clicks events\n', EEG.event(first).latency, first-1);
+                    break
+                end
+            end
+       
+            pop_saveset( EEG, [files(k).name(1:end-4)], subject_save_path);
+            
+        end
+    end
+end
+
+
+% to make sure that the breaks are calculated accurately, I did the followimg:
+% new_eeg = eeg_eegrej( EEG, x);
+% EEG.pnts-new_eeg.pnts is equal to sum(y). so it worked!
+
+

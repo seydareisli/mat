@@ -1,6 +1,7 @@
 % Author: Seydanur Tikir (seydanurtikir@gmail.com)
 % July 10  2020
 
+%Sophie’s favorite 
 %draws scalp comparision maps as Sophie likes
 %using pop_comperp function
 %input: 3D array for times x conds x chans
