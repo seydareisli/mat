@@ -1,15 +1,5 @@
 % Author: Seydanur Tikir (seydanurtikir@gmail.com)
 
-filter075 =1;
-filter001 =5;
-
-if filter075==1; 
-save_path= 'X:\Analyses\_01InitialProcessed\';
-elseif filter001==1; 
-%I think this one ='X:\Analyses\_01InitialProcessedFilter001\';
-end
-
-
 % Removes EEG data within the regions of rest breaks
 %   1. removes initial break where the participant is reading instructions 
 %   2. removes all breaks between any two trials
@@ -21,26 +11,33 @@ end
 
 % IMPORTANT NOTE: USE EEGLAB 14 OR LATER VERSIONS! - See eeglab bug 1971 for more info
 
-
 % -------------------------------------------------------------------------
 % Author: Seydanur Tikir stikir@mail.einstein.yu.edu
 % Jan 30th, 2019
 % -------------------------------------------------------------------------
 
+filter075 =1;
+filter001 =0;
+
+if filter075==1; 
+    save_path= [rootDir,'Analyses',filesep,'_01InitialProcessed',filesep];
+elseif filter001==1; 
+    save_path= [rootDir,'Analyses',filesep,'_01InitialProcessedFilter001',filesep];
+end
 
 %clear; clc;
 %paths;
 load_path = path00;  
-eeglab; 
+
 %cd([path_Diary,pc_name]);diary 'initialProcessing'; cd(path_Notes);
 fileID = [datestr(now, 'yymmdd'),'_initialProcessing_',pc_name];
 dlmwrite(fileID,['******** Start - Date and Time:',datestr(now, 'dd/mm/yy HH:MM'),' ********'], 'delimiter','','-append');
 
 %PC_Subjects = {'11051','1838','10056'};
-PC_Subjects = {'11977'};
+PC_Subjects = {'12474'};
 
 for i = 1:2
-    id = dir([load_path,group{i},filesep,'1*']); 
+    id = dir([load_path,filesep,group{i},filesep,'1*']); 
     
     for j = 1:size(id,1) 
         if ismember(id(j).name,PC_Subjects);else;continue;end         
@@ -64,11 +61,13 @@ for i = 1:2
             figure; topoplot([],EEG.chanlocs, 'style', 'blank',  'electrodes', 'labelpoint', 'chaninfo', EEG.chaninfo); close;
             EEG.data = double(EEG.data);   
             EEG = pop_resample(EEG, 128);
-    if filter075 == 1;
-    EEG = pop_eegfiltnew(EEG, [], 0.75, [], true, [], 0);
-    elseif filter001 ==1;
-    EEG = pop_eegfiltnew(EEG, [], 0.75, [], true, [], 0);
-    end
+   
+            if filter075 == 1;
+                EEG = pop_eegfiltnew(EEG, [], 0.75, [], true, [], 0);
+            elseif filter001 ==1;
+                EEG = pop_eegfiltnew(EEG, [], 0.01, [], true, [], 0);
+            end
+            
             EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan],'computepower',1,'linefreqs',[60 180] ,'normSpectrum',0,'p',0.05,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
             EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan],'computepower',1,'linefreqs',[60 180] ,'normSpectrum',0,'p',0.05,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
             close all;
